@@ -1,0 +1,17 @@
+{
+  "name": "hood-warfare-2",
+  "version": "2.0.0",
+  "description": "Hood Warfare 2 - 3D Multiplayer FPS (PlayCanvas Engine + Node.js/Socket.io)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/testMultiplayer.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "playcanvas": "^2.5.0",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.8.1"
+  }
+}

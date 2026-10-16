@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>HOOD WARFARE 2 — 3D Multiplayer FPS (Nuketown)</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- 3D Canvas -->
+  <canvas id="application-canvas"></canvas>
+
+  <!-- Container for projected 3D nametags -->
+  <div id="nametag-container"></div>
+
+  <!-- Blood / Damage Directional Vignette -->
+  <div id="damage-vignette"></div>
+
+  <!-- Dynamic Center Crosshair & Hitmarker -->
+  <div id="crosshair">
+    <div class="ch-line ch-top"></div>
+    <div class="ch-line ch-bottom"></div>
+    <div class="ch-line ch-left"></div>
+    <div class="ch-line ch-right"></div>
+    <div class="ch-dot"></div>
+  </div>
+
+  <div id="hitmarker">
+    <div class="hm-line hm-tl"></div>
+    <div class="hm-line hm-tr"></div>
+    <div class="hm-line hm-bl"></div>
+    <div class="hm-line hm-br"></div>
+  </div>
+
+  <!-- Spawns Flipped Banner -->
+  <div id="banner-spawns-flipped" class="game-banner">
+    ⚠️ SPAWNS FLIPPED! WATCH YOUR BACK ⚠️
+  </div>
+
+  <!-- SCREEN 1: SERVER BROWSER -->
+  <div id="screen-server-browser" class="ui-screen">
+    <div class="browser-panel">
+      <div class="browser-header">
+        <h1 class="game-title">HOOD WARFARE 2</h1>
+        <div class="game-subtitle">NUKETOWN 24/7 TACTICAL MULTIPLAYER FPS</div>
+      </div>
+
+      <div class="callsign-section">
+        <label for="input-callsign">CALLSIGN (OPERATOR NAME):</label>
+        <input type="text" id="input-callsign" maxlength="16" placeholder="HOOD_SOLDIER_99" autocomplete="off" spellcheck="false">
+      </div>
+
+      <div class="server-list-section">
+        <table class="server-table">
+          <thead>
+            <tr>
+              <th>SERVER NAME & REGION</th>
+              <th>OPERATORS</th>
+              <th>SCORE (CRIPS - BLOODS)</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody id="server-table-body">
+            <!-- Populated via Socket.io lobby:list -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="browser-footer">
+        <span>ENGINE: PLAYCANVAS PBR</span>
+        <span>NETWORKING: 20HZ AUTHORITATIVE SOCKET.IO</span>
+        <span>AUDIO: PROCEDURAL WEB AUDIO SYNTH</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: FACTION & LOADOUT SELECTION -->
+  <div id="screen-team-select" class="ui-screen" style="display: none;">
+    <div class="team-select-panel">
+      <h2 class="section-title">CHOOSE YOUR FACTION</h2>
+
+      <div id="team-balance-warning" class="alert-box" style="display: none;"></div>
+
+      <div class="factions-container">
+        <!-- Crips Card -->
+        <div id="card-crips" class="faction-card crip-card selected">
+          <div class="faction-glow"></div>
+          <div class="faction-tag">WEST TURF (WEST HOUSE)</div>
+          <h3 class="faction-name">CRIPS</h3>
+          <div class="faction-desc">Blue Bandanas & Streetwear. Defend the West Lot & Blue Trim House.</div>
+          <div id="crips-count-label" class="faction-count">0 Players</div>
+        </div>
+
+        <!-- Bloods Card -->
+        <div id="card-bloods" class="faction-card blood-card">
+          <div class="faction-glow"></div>
+          <div class="faction-tag">EAST TURF (EAST HOUSE)</div>
+          <h3 class="faction-name">BLOODS</h3>
+          <div class="faction-desc">Red Bandanas & Streetwear. Hold down the East Backyard & Red Trim House.</div>
+          <div id="bloods-count-label" class="faction-count">0 Players</div>
+        </div>
+      </div>
+
+      <h2 class="section-title" style="margin-top: 24px;">SELECT COMBAT LOADOUT</h2>
+      <div class="loadouts-container">
+        <!-- Loadout 1 -->
+        <div class="loadout-card selected" data-loadout="ar">
+          <div class="lo-type">LOADOUT 1: ASSAULT</div>
+          <div class="lo-name">STREET AK-47</div>
+          <div class="lo-stats">Full-Auto • 620 RPM • 30 Base DMG • High Range</div>
+        </div>
+
+        <!-- Loadout 2 -->
+        <div class="loadout-card" data-loadout="smg">
+          <div class="lo-type">LOADOUT 2: RUSH SMG</div>
+          <div class="lo-name">MAC-10 SMG</div>
+          <div class="lo-stats">Full-Auto • 900 RPM • 22 Base DMG • Fast ADS & Mobility</div>
+        </div>
+
+        <!-- Loadout 3 -->
+        <div class="loadout-card" data-loadout="shotgun">
+          <div class="lo-type">LOADOUT 3: BREACHER</div>
+          <div class="lo-name">TRENCH 12G</div>
+          <div class="lo-stats">Pump-Action • 8 Pellets • 144 Max DMG • Close Quarters</div>
+        </div>
+      </div>
+
+      <button id="btn-deploy" class="btn-primary-deploy">DEPLOY TO NUKETOWN</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: ACTIVE IN-GAME HUD -->
+  <div id="screen-hud" class="ui-screen" style="display: none;">
+    <!-- Top-Left Scoreboard & Match Timer -->
+    <div class="hud-top-left">
+      <div class="timer-badge">
+        <span class="timer-icon">⏱</span>
+        <span id="hud-timer">10:00</span>
+      </div>
+
+      <div class="score-bars-container">
+        <!-- Crips Score -->
+        <div class="score-row">
+          <div class="score-label crip-label">CRIPS</div>
+          <div class="bar-track">
+            <div id="score-crips-bar" class="bar-fill crip-fill" style="width: 0%"></div>
+          </div>
+          <div id="score-crips-val" class="score-val crip-val">0</div>
+        </div>
+
+        <!-- Bloods Score -->
+        <div class="score-row">
+          <div class="score-label blood-label">BLOODS</div>
+          <div class="bar-track">
+            <div id="score-bloods-bar" class="bar-fill blood-fill" style="width: 0%"></div>
+          </div>
+          <div id="score-bloods-val" class="score-val blood-val">0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top-Right Killfeed -->
+    <div id="killfeed-container" class="hud-top-right"></div>
+
+    <!-- Click to Play / Mouse Lock Prompt -->
+    <div id="click-to-play-prompt" class="click-to-play-overlay" style="display: none;">
+      <div class="click-to-play-card">
+        <div class="c2p-icon">🎯</div>
+        <div class="c2p-title">CLICK ANYWHERE TO AIM</div>
+        <div class="c2p-subtitle">Engage Mouse Lock to Control Weapon & Look Around</div>
+      </div>
+    </div>
+
+    <!-- Bottom-Left Status (Health, Faction, Posture) -->
+    <div class="hud-bottom-left">
+      <div class="status-badge-row">
+        <div id="hud-faction-badge" class="faction-badge crips">CRIPS</div>
+        <div id="hud-posture" class="posture-badge">STAND</div>
+      </div>
+
+      <div class="health-row">
+        <div class="hp-number-box">
+          <span class="hp-label">HP</span>
+          <span id="hud-hp-val">100</span>
+        </div>
+        <div class="hp-bar-track">
+          <div id="hud-hp-bar" class="hp-bar-fill" style="width: 100%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom-Right Status (Weapon, Ammo, Keybinds) -->
+    <div class="hud-bottom-right">
+      <div class="weapon-info-box">
+        <div id="hud-weapon-name" class="weapon-name">STREET AK-47</div>
+        <div class="ammo-counter">
+          <span id="hud-ammo-mag" class="ammo-mag">30</span>
+          <span class="ammo-slash">/</span>
+          <span id="hud-ammo-reserve" class="ammo-reserve">120</span>
+        </div>
+        <div class="reload-track">
+          <div id="hud-reload-bar" class="reload-fill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div class="keybinds-row">
+        <span>[1/2] Switch</span>
+        <span>[R] Reload</span>
+        <span>[C] Slide</span>
+        <span>[M] Change Team</span>
+        <span>[TAB] Scoreboard</span>
+      </div>
+    </div>
+
+    <!-- Death / Respawn Overlay -->
+    <div id="death-screen" class="death-overlay" style="display: none;">
+      <div class="death-panel">
+        <h2 class="death-title">YOU WERE ELIMINATED</h2>
+        <div id="death-killer" class="death-killer-text">Killed by Enemy</div>
+        <div id="death-timer" class="death-countdown">Respawning in 3s...</div>
+      </div>
+    </div>
+
+    <!-- Match Over Overlay -->
+    <div id="match-over-screen" class="match-over-overlay" style="display: none;">
+      <div class="match-over-panel">
+        <h1 id="match-over-title" class="match-over-banner">VICTORY</h1>
+        <div id="match-over-scores" class="match-over-sub">CRIPS 75 — BLOODS 42</div>
+        <div class="match-over-wait">Next round begins in 8 seconds...</div>
+      </div>
+    </div>
+
+    <!-- Full TAB Scoreboard Modal -->
+    <div id="modal-scoreboard" class="scoreboard-modal" style="display: none;">
+      <div class="sb-container">
+        <h2 class="sb-header">MATCH SCOREBOARD</h2>
+        <div class="sb-teams-grid">
+          <!-- Crips Roster -->
+          <div class="sb-team-col crips-col">
+            <div class="sb-team-title">CRIPS (WEST TURF)</div>
+            <div class="sb-table-head">
+              <span>PLAYER</span><span>K</span><span>D</span><span>K/D</span>
+            </div>
+            <div id="sb-crips-list" class="sb-player-list"></div>
+          </div>
+
+          <!-- Bloods Roster -->
+          <div class="sb-team-col bloods-col">
+            <div class="sb-team-title">BLOODS (EAST TURF)</div>
+            <div class="sb-table-head">
+              <span>PLAYER</span><span>K</span><span>D</span><span>K/D</span>
+            </div>
+            <div id="sb-bloods-list" class="sb-player-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <!-- 1. PlayCanvas Local Script with CDN Fallback -->
+  <script src="/lib/playcanvas.min.js" onerror="this.onerror=null;this.src='https://code.playcanvas.com/playcanvas-stable.min.js';"></script>
+  <!-- 2. Socket.io Client -->
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- 3. Game Config & Logic -->
+  <script src="/js/config/mapData.js"></script>
+  <script src="/js/config/weaponsData.js"></script>
+  <script src="/js/audio/soundSynth.js"></script>
+  <script src="/js/world/mapBuilder.js"></script>
+  <script src="/js/entities/localPlayer.js"></script>
+  <script src="/js/entities/weaponSystem.js"></script>
+  <script src="/js/entities/remotePlayer.js"></script>
+  <script src="/js/network/networkClient.js"></script>
+  <script src="/js/ui/uiManager.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
