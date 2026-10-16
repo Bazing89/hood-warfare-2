@@ -28,6 +28,7 @@
 
       this.cacheDomElements();
       this.initEvents();
+      this.initDefaultServerBrowser();
     }
 
     cacheDomElements() {
@@ -232,17 +233,29 @@
       });
     }
 
-    joinServer(serverId) {
-      if (!this.networkClient) return;
+    initDefaultServerBrowser() {
+      const defaultServers = [
+        { id: 'server-1', name: 'Server 1 - Nuketown 24/7 [US-East]', humans: 1, bots: 7, max: 12, scoreCrips: 24, scoreBloods: 21 },
+        { id: 'server-2', name: 'Server 2 - Turf War TDM [US-West]',  humans: 2, bots: 6, max: 12, scoreCrips: 38, scoreBloods: 35 },
+        { id: 'server-3', name: 'Server 3 - Hood Classic [US-East]',   humans: 1, bots: 7, max: 12, scoreCrips: 42, scoreBloods: 49 },
+        { id: 'server-4', name: 'Server 4 - Competitive Scrims [Global]', humans: 0, bots: 0, max: 12, scoreCrips: 0, scoreBloods: 0 }
+      ];
+      this.updateServerBrowser(defaultServers);
+    }
 
-      this.networkClient.joinServer(serverId, this.callsign, (res) => {
-        if (res && res.success) {
+    joinServer(serverId) {
+      this.selectedServerId = serverId;
+      this.callsign = (this.callsignInput && this.callsignInput.value.trim()) || this.callsign;
+      if (this.networkClient) {
+        this.networkClient.joinServer(serverId, this.callsign, (res) => {
           this.showScreen('team-select');
-          if (res.teamCounts) {
+          if (res && res.teamCounts) {
             this.updateTeamCounts(res.teamCounts);
           }
-        }
-      });
+        });
+      } else {
+        this.showScreen('team-select');
+      }
     }
 
     updateTeamCounts(counts) {

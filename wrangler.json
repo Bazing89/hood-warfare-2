@@ -7,5 +7,15 @@
   ],
   "assets": {
     "directory": "./public"
-  }
+  },
+  "routes": [
+    {
+      "pattern": "bangheroes.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.bangheroes.com",
+      "custom_domain": true
+    }
+  ]
 }
