@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "build": "echo 'Client assets ready in public/'",
     "test": "node tests/testMultiplayer.js"
   },
   "dependencies": {

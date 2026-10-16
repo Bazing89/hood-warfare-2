@@ -33,9 +33,10 @@
     }
 
     initSocket() {
-      // Connect to origin socket.io server
+      // Connect to origin socket.io server (or custom backend URL if specified)
       if (typeof io !== 'undefined') {
-        this.socket = io({ reconnection: true, reconnectionDelay: 1000 });
+        const targetUrl = window.HOOD_SERVER_URL || undefined;
+        this.socket = io(targetUrl, { reconnection: true, reconnectionDelay: 1000 });
       } else {
         console.error('[NetworkClient] Socket.io library not loaded!');
         return;
