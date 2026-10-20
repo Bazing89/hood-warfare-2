@@ -30,6 +30,12 @@ export default {
       return env.ASSETS.fetch(new Request(rewritten.toString(), request));
     }
 
+    // Route /indian or /indian-simulator to /indian.html
+    if (url.pathname === '/indian' || url.pathname === '/indian-simulator') {
+      const rewritten = new URL('/indian.html', request.url);
+      return env.ASSETS.fetch(new Request(rewritten.toString(), request));
+    }
+
     // Serve static files from public/ via Cloudflare Assets
     if (env && env.ASSETS && typeof env.ASSETS.fetch === 'function') {
       return env.ASSETS.fetch(request);
