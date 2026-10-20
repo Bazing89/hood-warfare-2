@@ -1,0 +1,498 @@
+{
+  "karen1_hoa": {
+    "kill": [
+      {
+        "file": "audio/voice/karen1_hoa/kill_01.mp3",
+        "text": "I'm not yelling, THIS is my normal voice. Get me your manager. Now."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/kill_02.mp3",
+        "text": "My husband is a lawyer."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/kill_03.mp3",
+        "text": "I have a 4.9 Uber rating and 400 Facebook friends, so don't test me."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/kill_04.mp3",
+        "text": "I'd like to speak to your manager... oh wait, he's dead too."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/kill_05.mp3",
+        "text": "This is going on Yelp. One star."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/kill_06.mp3",
+        "text": "Bye-bye now! Have a blessed day!"
+      },
+      {
+        "file": "audio/voice/karen1_hoa/kill_07.mp3",
+        "text": "Unacceptable. Absolutely unacceptable."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/kill_08.mp3",
+        "text": "Not in MY cul-de-sac!"
+      },
+      {
+        "file": "audio/voice/karen1_hoa/kill_09.mp3",
+        "text": "Did you just die on me? Rude."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/kill_10.mp3",
+        "text": "And THAT is why we don't park on the lawn."
+      }
+    ],
+    "multikill": [
+      {
+        "file": "audio/voice/karen1_hoa/multikill_01.mp3",
+        "text": "I want ALL of your managers. Every single one!"
+      },
+      {
+        "file": "audio/voice/karen1_hoa/multikill_02.mp3",
+        "text": "Two for one! I want my loyalty points!"
+      },
+      {
+        "file": "audio/voice/karen1_hoa/multikill_03.mp3",
+        "text": "Who else wants to see the manager? Anyone?!"
+      }
+    ],
+    "reload": [
+      {
+        "file": "audio/voice/karen1_hoa/reload_01.mp3",
+        "text": "Reloading, and I am NOT happy about it."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/reload_02.mp3",
+        "text": "Hold on, I'm getting more from my purse."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/reload_03.mp3",
+        "text": "Cover me, I chipped a nail!"
+      }
+    ],
+    "spotted": [
+      {
+        "file": "audio/voice/karen1_hoa/spotted_01.mp3",
+        "text": "Excuse me! I was here first!"
+      },
+      {
+        "file": "audio/voice/karen1_hoa/spotted_02.mp3",
+        "text": "Ma'am! MA'AM! Over there!"
+      },
+      {
+        "file": "audio/voice/karen1_hoa/spotted_03.mp3",
+        "text": "Oh, look who's loitering."
+      }
+    ],
+    "peppered": [
+      {
+        "file": "audio/voice/karen1_hoa/peppered_01.mp3",
+        "text": "Oh my God, you did not just do that to me."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/peppered_02.mp3",
+        "text": "Oh my GOD! My EYES! My lashes are RUINED!"
+      },
+      {
+        "file": "audio/voice/karen1_hoa/peppered_03.mp3",
+        "text": "This is assault! I'm getting this on camera!"
+      },
+      {
+        "file": "audio/voice/karen1_hoa/peppered_04.mp3",
+        "text": "My eyes! I just had my brows done!"
+      }
+    ],
+    "spraying": [
+      {
+        "file": "audio/voice/karen1_hoa/spraying_01.mp3",
+        "text": "Back. Off."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/spraying_02.mp3",
+        "text": "I WILL use this!"
+      }
+    ],
+    "pepkill": [
+      {
+        "file": "audio/voice/karen1_hoa/pepkill_01.mp3",
+        "text": "Should've listened the first time."
+      },
+      {
+        "file": "audio/voice/karen1_hoa/pepkill_02.mp3",
+        "text": "Maybe now you'll read the HOA guidelines."
+      }
+    ]
+  },
+  "karen2_hoa": {
+    "kill": [
+      {
+        "file": "audio/voice/karen2_hoa/kill_01.mp3",
+        "text": "I pay your salary."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/kill_02.mp3",
+        "text": "My nephew is a cop."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/kill_03.mp3",
+        "text": "I have a 4.9 Uber rating and 400 Facebook friends, so don't test me."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/kill_04.mp3",
+        "text": "Ma'am, I will be leaving a review."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/kill_05.mp3",
+        "text": "I know the owner."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/kill_06.mp3",
+        "text": "Do you know who I am? Well. Now you never will."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/kill_07.mp3",
+        "text": "Your lawn was a disgrace anyway."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/kill_08.mp3",
+        "text": "Consider yourself... fined."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/kill_09.mp3",
+        "text": "I'll be taking this up with corporate."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/kill_10.mp3",
+        "text": "Bless your heart."
+      }
+    ],
+    "multikill": [
+      {
+        "file": "audio/voice/karen2_hoa/multikill_01.mp3",
+        "text": "Mm. I'll take the whole display, thank you."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/multikill_02.mp3",
+        "text": "And THIS is why I run the HOA."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/multikill_03.mp3",
+        "text": "Is there anyone ELSE here I need to complain about?"
+      }
+    ],
+    "reload": [
+      {
+        "file": "audio/voice/karen2_hoa/reload_01.mp3",
+        "text": "One moment. I'm reloading, and I do not like to be rushed."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/reload_02.mp3",
+        "text": "Hold my latte. Reloading."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/reload_03.mp3",
+        "text": "Reloading. Do NOT interrupt me."
+      }
+    ],
+    "spotted": [
+      {
+        "file": "audio/voice/karen2_hoa/spotted_01.mp3",
+        "text": "Can I see some ID?"
+      },
+      {
+        "file": "audio/voice/karen2_hoa/spotted_02.mp3",
+        "text": "Oh, look. The PTA."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/spotted_03.mp3",
+        "text": "I'm calling the HOA. Oh wait. I AM the HOA."
+      }
+    ],
+    "peppered": [
+      {
+        "file": "audio/voice/karen2_hoa/peppered_01.mp3",
+        "text": "Oh my God, you did not just do that to me."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/peppered_02.mp3",
+        "text": "My EYES! This blouse is SILK!"
+      },
+      {
+        "file": "audio/voice/karen2_hoa/peppered_03.mp3",
+        "text": "You did NOT just do that! I'm calling the police!"
+      },
+      {
+        "file": "audio/voice/karen2_hoa/peppered_04.mp3",
+        "text": "This is assault! I want your NAME!"
+      }
+    ],
+    "spraying": [
+      {
+        "file": "audio/voice/karen2_hoa/spraying_01.mp3",
+        "text": "Step. Back."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/spraying_02.mp3",
+        "text": "Stay away from my Range Rover!"
+      }
+    ],
+    "pepkill": [
+      {
+        "file": "audio/voice/karen2_hoa/pepkill_01.mp3",
+        "text": "Should've listened the first time."
+      },
+      {
+        "file": "audio/voice/karen2_hoa/pepkill_02.mp3",
+        "text": "Next time, stay off my property."
+      }
+    ]
+  },
+  "karen3_pta": {
+    "kill": [
+      {
+        "file": "audio/voice/karen3_pta/kill_01.mp3",
+        "text": "I'm not yelling, THIS is my normal voice. Get me your manager. Now."
+      },
+      {
+        "file": "audio/voice/karen3_pta/kill_02.mp3",
+        "text": "My nephew is a cop."
+      },
+      {
+        "file": "audio/voice/karen3_pta/kill_03.mp3",
+        "text": "I have a 4.9 Uber rating and 400 Facebook friends, so don't test me."
+      },
+      {
+        "file": "audio/voice/karen3_pta/kill_04.mp3",
+        "text": "I want a refund!"
+      },
+      {
+        "file": "audio/voice/karen3_pta/kill_05.mp3",
+        "text": "Excuse me, I was here first."
+      },
+      {
+        "file": "audio/voice/karen3_pta/kill_06.mp3",
+        "text": "Unacceptable!"
+      },
+      {
+        "file": "audio/voice/karen3_pta/kill_07.mp3",
+        "text": "The bake sale is CANCELLED, sweetie."
+      },
+      {
+        "file": "audio/voice/karen3_pta/kill_08.mp3",
+        "text": "Now THAT is customer service!"
+      },
+      {
+        "file": "audio/voice/karen3_pta/kill_09.mp3",
+        "text": "Ooh, somebody's getting a strongly worded email."
+      },
+      {
+        "file": "audio/voice/karen3_pta/kill_10.mp3",
+        "text": "And stay OUT of the carpool lane!"
+      }
+    ],
+    "multikill": [
+      {
+        "file": "audio/voice/karen3_pta/multikill_01.mp3",
+        "text": "Two for one! I'm using my coupon!"
+      },
+      {
+        "file": "audio/voice/karen3_pta/multikill_02.mp3",
+        "text": "I'm on a roll! Somebody get me a mimosa!"
+      },
+      {
+        "file": "audio/voice/karen3_pta/multikill_03.mp3",
+        "text": "I want to speak to ALL of your managers!"
+      }
+    ],
+    "reload": [
+      {
+        "file": "audio/voice/karen3_pta/reload_01.mp3",
+        "text": "Reloading! Don't you DARE look at me like that!"
+      },
+      {
+        "file": "audio/voice/karen3_pta/reload_02.mp3",
+        "text": "Hang on, hun, I'm reloading."
+      },
+      {
+        "file": "audio/voice/karen3_pta/reload_03.mp3",
+        "text": "Reloading! Where is my PURSE?!"
+      }
+    ],
+    "spotted": [
+      {
+        "file": "audio/voice/karen3_pta/spotted_01.mp3",
+        "text": "Excuse me?!"
+      },
+      {
+        "file": "audio/voice/karen3_pta/spotted_02.mp3",
+        "text": "Ma'am! I see you over there!"
+      },
+      {
+        "file": "audio/voice/karen3_pta/spotted_03.mp3",
+        "text": "Oh, honey, no. Not today."
+      }
+    ],
+    "peppered": [
+      {
+        "file": "audio/voice/karen3_pta/peppered_01.mp3",
+        "text": "Oh my God, you did not just do that to me."
+      },
+      {
+        "file": "audio/voice/karen3_pta/peppered_02.mp3",
+        "text": "Oh my GOD! My EYES! My lashes are RUINED!"
+      },
+      {
+        "file": "audio/voice/karen3_pta/peppered_03.mp3",
+        "text": "You did NOT just do that! I'm calling the police!"
+      },
+      {
+        "file": "audio/voice/karen3_pta/peppered_04.mp3",
+        "text": "Is this even organic?! I'm ALLERGIC!"
+      }
+    ],
+    "spraying": [
+      {
+        "file": "audio/voice/karen3_pta/spraying_01.mp3",
+        "text": "I WILL use this!"
+      },
+      {
+        "file": "audio/voice/karen3_pta/spraying_02.mp3",
+        "text": "Don't make me do it, sweetie!"
+      }
+    ],
+    "pepkill": [
+      {
+        "file": "audio/voice/karen3_pta/pepkill_01.mp3",
+        "text": "Should've listened the first time."
+      },
+      {
+        "file": "audio/voice/karen3_pta/pepkill_02.mp3",
+        "text": "Told you, sweetie."
+      }
+    ]
+  },
+  "karen4_pta": {
+    "kill": [
+      {
+        "file": "audio/voice/karen4_pta/kill_01.mp3",
+        "text": "I pay your salary."
+      },
+      {
+        "file": "audio/voice/karen4_pta/kill_02.mp3",
+        "text": "My husband is a lawyer."
+      },
+      {
+        "file": "audio/voice/karen4_pta/kill_03.mp3",
+        "text": "I have a 4.9 Uber rating and 400 Facebook friends, so don't test me."
+      },
+      {
+        "file": "audio/voice/karen4_pta/kill_04.mp3",
+        "text": "This is going on Yelp. One star."
+      },
+      {
+        "file": "audio/voice/karen4_pta/kill_05.mp3",
+        "text": "Do you know who I am?"
+      },
+      {
+        "file": "audio/voice/karen4_pta/kill_06.mp3",
+        "text": "Wow. Okay. Thanks SO much."
+      },
+      {
+        "file": "audio/voice/karen4_pta/kill_07.mp3",
+        "text": "I know the owner, sweetie."
+      },
+      {
+        "file": "audio/voice/karen4_pta/kill_08.mp3",
+        "text": "Not in MY cul-de-sac."
+      },
+      {
+        "file": "audio/voice/karen4_pta/kill_09.mp3",
+        "text": "And I'm cancelling my membership."
+      },
+      {
+        "file": "audio/voice/karen4_pta/kill_10.mp3",
+        "text": "Ugh. Can I get some service over here? Oh. Wait."
+      }
+    ],
+    "multikill": [
+      {
+        "file": "audio/voice/karen4_pta/multikill_01.mp3",
+        "text": "Next! I said NEXT!"
+      },
+      {
+        "file": "audio/voice/karen4_pta/multikill_02.mp3",
+        "text": "I'd like to speak to your manager... oh wait, he's dead too."
+      },
+      {
+        "file": "audio/voice/karen4_pta/multikill_03.mp3",
+        "text": "Is this the line for refunds? Because I'm getting ALL of them."
+      }
+    ],
+    "reload": [
+      {
+        "file": "audio/voice/karen4_pta/reload_01.mp3",
+        "text": "Reloading, and I am NOT happy about it."
+      },
+      {
+        "file": "audio/voice/karen4_pta/reload_02.mp3",
+        "text": "Ugh. Reloading. This is SO inconvenient."
+      },
+      {
+        "file": "audio/voice/karen4_pta/reload_03.mp3",
+        "text": "Reloading. Don't even look at me."
+      }
+    ],
+    "spotted": [
+      {
+        "file": "audio/voice/karen4_pta/spotted_01.mp3",
+        "text": "Can I see some ID?"
+      },
+      {
+        "file": "audio/voice/karen4_pta/spotted_02.mp3",
+        "text": "Oh great, it's HER."
+      },
+      {
+        "file": "audio/voice/karen4_pta/spotted_03.mp3",
+        "text": "Excuse me, I was here first."
+      }
+    ],
+    "peppered": [
+      {
+        "file": "audio/voice/karen4_pta/peppered_01.mp3",
+        "text": "Oh my God, you did not just do that to me."
+      },
+      {
+        "file": "audio/voice/karen4_pta/peppered_02.mp3",
+        "text": "Oh my GOD! My EYES! My lashes are RUINED!"
+      },
+      {
+        "file": "audio/voice/karen4_pta/peppered_03.mp3",
+        "text": "This is assault! I'm getting this on camera!"
+      },
+      {
+        "file": "audio/voice/karen4_pta/peppered_04.mp3",
+        "text": "My contacts! I PAID for these!"
+      }
+    ],
+    "spraying": [
+      {
+        "file": "audio/voice/karen4_pta/spraying_01.mp3",
+        "text": "Back. Off."
+      },
+      {
+        "file": "audio/voice/karen4_pta/spraying_02.mp3",
+        "text": "Stay away from my Range Rover!"
+      }
+    ],
+    "pepkill": [
+      {
+        "file": "audio/voice/karen4_pta/pepkill_01.mp3",
+        "text": "Should've listened the first time."
+      },
+      {
+        "file": "audio/voice/karen4_pta/pepkill_02.mp3",
+        "text": "Aww. Teary eyes? Cute."
+      }
+    ]
+  }
+}

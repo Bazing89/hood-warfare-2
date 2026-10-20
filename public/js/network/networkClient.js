@@ -215,6 +215,22 @@
       }
     }
 
+    leaveMatch() {
+      this.inGame = false;
+      this.stopTransformEmitter();
+      if (this.socket && this.socket.connected) {
+        this.socket.emit('game:leave', { serverId: this.currentServerId });
+      }
+      for (const id in this.remotePlayers) {
+        if (this.remotePlayers[id] && typeof this.remotePlayers[id].destroy === 'function') {
+          this.remotePlayers[id].destroy();
+        }
+      }
+      this.remotePlayers = {};
+      this.standaloneBots = {};
+      this.currentTeam = null;
+    }
+
     initStandaloneMatch(team, loadoutId) {
       this.standaloneScores = { crips: 0, bloods: 0 };
       this.standaloneTimer = 600;

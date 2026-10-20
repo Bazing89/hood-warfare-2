@@ -23,21 +23,29 @@
       this.selectedLoadout = 'ar';
       this.callsign = 'HOOD_SOLDIER_' + Math.floor(Math.random() * 899 + 100);
 
-      this.currentScreen = 'browser'; // 'browser' | 'team-select' | 'hud'
+      this.currentScreen = 'hub'; // 'hub' | 'browser' | 'team-select' | 'hud'
       this.isScoreboardOpen = false;
 
       this.cacheDomElements();
       this.initEvents();
       this.initDefaultServerBrowser();
+      this.showScreen('hub');
     }
 
     cacheDomElements() {
       // Screens
+      this.screenGamesHub = document.getElementById('screen-games-hub');
       this.screenBrowser = document.getElementById('screen-server-browser');
       this.screenTeamSelect = document.getElementById('screen-team-select');
       this.screenHud = document.getElementById('screen-hud');
 
+      // Hub Buttons
+      this.btnLaunchHood = document.getElementById('btn-launch-hood');
+      this.btnLaunchThird = document.getElementById('btn-launch-third');
+      this.modalTeaser = document.getElementById('modal-teaser');
+
       // Server Browser elements
+      this.btnBrowserBackToHub = document.getElementById('btn-browser-back-to-hub');
       this.callsignInput = document.getElementById('input-callsign');
       this.serverTableBody = document.getElementById('server-table-body');
 
@@ -48,9 +56,11 @@
       this.bloodsCountEl = document.getElementById('bloods-count-label');
       this.balanceWarningEl = document.getElementById('team-balance-warning');
       this.btnDeploy = document.getElementById('btn-deploy');
+      this.btnBackToBrowser = document.getElementById('btn-back-to-browser');
 
       // HUD elements
       this.hudTimer = document.getElementById('hud-timer');
+      this.btnHudMenu = document.getElementById('btn-hud-menu');
       this.scoreCripsBar = document.getElementById('score-crips-bar');
       this.scoreBloodsBar = document.getElementById('score-bloods-bar');
       this.scoreCripsVal = document.getElementById('score-crips-val');
@@ -61,6 +71,8 @@
       this.hitmarker = document.getElementById('hitmarker');
       this.damageVignette = document.getElementById('damage-vignette');
       this.clickToPlayPrompt = document.getElementById('click-to-play-prompt');
+      this.btnC2pResume = document.getElementById('btn-c2p-resume');
+      this.btnC2pMenu = document.getElementById('btn-c2p-menu');
 
       this.hudHpVal = document.getElementById('hud-hp-val');
       this.hudHpBar = document.getElementById('hud-hp-bar');
@@ -73,6 +85,11 @@
       this.hudReloadBar = document.getElementById('hud-reload-bar');
 
       // Modals / Overlays
+      this.modalPauseMenu = document.getElementById('modal-pause-menu');
+      this.btnPauseResume = document.getElementById('btn-pause-resume');
+      this.btnPauseTeam = document.getElementById('btn-pause-team');
+      this.btnPauseLeave = document.getElementById('btn-pause-leave');
+
       this.modalScoreboard = document.getElementById('modal-scoreboard');
       this.sbCripsList = document.getElementById('sb-crips-list');
       this.sbBloodsList = document.getElementById('sb-bloods-list');
@@ -105,6 +122,26 @@
     }
 
     initEvents() {
+      // Main Hub Game Launchers
+      if (this.btnLaunchHood) {
+        this.btnLaunchHood.addEventListener('click', () => {
+          this.showScreen('browser');
+        });
+      }
+
+      if (this.btnLaunchThird) {
+        this.btnLaunchThird.addEventListener('click', () => {
+          if (this.modalTeaser) this.modalTeaser.style.display = 'flex';
+        });
+      }
+
+      // Server Browser Back to Games Hub
+      if (this.btnBrowserBackToHub) {
+        this.btnBrowserBackToHub.addEventListener('click', () => {
+          this.showScreen('hub');
+        });
+      }
+
       // Callsign change
       if (this.callsignInput) {
         this.callsignInput.addEventListener('input', (e) => {
@@ -147,34 +184,92 @@
         });
       }
 
-      // Click to play prompt or clicking anywhere while in game
-      if (this.clickToPlayPrompt) {
-        this.clickToPlayPrompt.addEventListener('click', () => {
+      // Back to Server Browser button
+      if (this.btnBackToBrowser) {
+        this.btnBackToBrowser.addEventListener('click', () => {
+          this.leaveMatchToMainMenu();
+        });
+      }
+
+      // HUD Menu button
+      if (this.btnHudMenu) {
+        this.btnHudMenu.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.togglePauseMenu();
+        });
+      }
+
+      // Pause Menu buttons
+      if (this.btnPauseResume) {
+        this.btnPauseResume.addEventListener('click', () => {
+          this.closePauseMenu();
+        });
+      }
+
+      if (this.btnPauseTeam) {
+        this.btnPauseTeam.addEventListener('click', () => {
+          this.closePauseMenu(false);
+          this.showTeamSelect();
+        });
+      }
+
+      if (this.btnPauseLeave) {
+        this.btnPauseLeave.addEventListener('click', () => {
+          this.leaveMatchToMainMenu();
+        });
+      }
+
+      // Click to play prompt buttons
+      if (this.btnC2pResume) {
+        this.btnC2pResume.addEventListener('click', () => {
           this.requestPointerLock();
         });
       }
 
-      window.addEventListener('click', () => {
+      if (this.btnC2pMenu) {
+        this.btnC2pMenu.addEventListener('click', () => {
+          this.leaveMatchToMainMenu();
+        });
+      }
+
+      // Clicking anywhere while in game (protect buttons/links from auto-locking!)
+      window.addEventListener('click', (e) => {
+        if (e.target.closest('button, a, input, .pause-menu-panel, .click-to-play-card, .game-modal')) {
+          return;
+        }
         if (this.currentScreen === 'hud' && !document.pointerLockElement) {
-          this.requestPointerLock();
+          if (!this.modalPauseMenu || this.modalPauseMenu.style.display === 'none') {
+            this.requestPointerLock();
+          }
         }
       });
 
       // Pointer lock change listener
       document.addEventListener('pointerlockchange', () => {
+        const locked = !!document.pointerLockElement;
+        const pauseOpen = this.modalPauseMenu && this.modalPauseMenu.style.display !== 'none';
         if (this.clickToPlayPrompt) {
-          const locked = !!document.pointerLockElement;
-          this.clickToPlayPrompt.style.display = (this.currentScreen === 'hud' && !locked) ? 'flex' : 'none';
+          this.clickToPlayPrompt.style.display = (this.currentScreen === 'hud' && !locked && !pauseOpen) ? 'flex' : 'none';
         }
       });
 
-      // Tab Scoreboard Key & M key
+      // Keyboard shortcuts: ESC, Tab, M
       window.addEventListener('keydown', (e) => {
+        if (e.code === 'Escape') {
+          if (this.currentScreen === 'hud') {
+            e.preventDefault();
+            this.togglePauseMenu();
+          } else if (this.currentScreen === 'team-select') {
+            e.preventDefault();
+            this.leaveMatchToMainMenu();
+          }
+        }
         if (e.code === 'Tab') {
           e.preventDefault();
           this.showScoreboard(true);
         }
         if (e.code === 'KeyM' && this.currentScreen === 'hud') {
+          this.closePauseMenu(false);
           this.showTeamSelect();
         }
       });
@@ -187,15 +282,64 @@
       });
     }
 
+    openPauseMenu() {
+      if (this.modalPauseMenu) {
+        this.modalPauseMenu.style.display = 'flex';
+      }
+      if (this.clickToPlayPrompt) {
+        this.clickToPlayPrompt.style.display = 'none';
+      }
+      if (document.exitPointerLock) {
+        document.exitPointerLock();
+      }
+    }
+
+    closePauseMenu(reLock = true) {
+      if (this.modalPauseMenu) {
+        this.modalPauseMenu.style.display = 'none';
+      }
+      if (reLock && this.currentScreen === 'hud') {
+        this.requestPointerLock();
+      }
+    }
+
+    togglePauseMenu() {
+      if (this.modalPauseMenu && this.modalPauseMenu.style.display === 'flex') {
+        this.closePauseMenu(true);
+      } else {
+        this.openPauseMenu();
+      }
+    }
+
+    leaveMatchToMainMenu() {
+      if (document.exitPointerLock) {
+        document.exitPointerLock();
+      }
+      if (this.networkClient) {
+        this.networkClient.leaveMatch();
+      }
+      if (this.localPlayer) {
+        this.localPlayer.alive = false;
+      }
+      if (this.modalPauseMenu) this.modalPauseMenu.style.display = 'none';
+      if (this.clickToPlayPrompt) this.clickToPlayPrompt.style.display = 'none';
+      if (this.modalScoreboard) this.modalScoreboard.style.display = 'none';
+      this.hideDeathScreen();
+      this.hideMatchOver();
+      this.showScreen('hub');
+    }
+
     showScreen(screenName) {
       this.currentScreen = screenName;
+      if (this.screenGamesHub) this.screenGamesHub.style.display = (screenName === 'hub') ? 'flex' : 'none';
       if (this.screenBrowser) this.screenBrowser.style.display = (screenName === 'browser') ? 'flex' : 'none';
       if (this.screenTeamSelect) this.screenTeamSelect.style.display = (screenName === 'team-select') ? 'flex' : 'none';
       if (this.screenHud) this.screenHud.style.display = (screenName === 'hud') ? 'block' : 'none';
 
       if (this.clickToPlayPrompt) {
         const locked = !!document.pointerLockElement;
-        this.clickToPlayPrompt.style.display = (screenName === 'hud' && !locked) ? 'flex' : 'none';
+        const pauseOpen = this.modalPauseMenu && this.modalPauseMenu.style.display === 'flex';
+        this.clickToPlayPrompt.style.display = (screenName === 'hud' && !locked && !pauseOpen) ? 'flex' : 'none';
       }
     }
 

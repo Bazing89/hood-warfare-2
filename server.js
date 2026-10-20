@@ -25,6 +25,16 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// WebRTC ICE servers for Karen Warfare
+app.get('/api/turn', (req, res) => {
+  res.json({ iceServers: [] });
+});
+
+// Dedicated routes for Karen Warfare
+app.get(['/karen', '/karen-warfare'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'karen.html'));
+});
+
 // Fallback route to serve index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

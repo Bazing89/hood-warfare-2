@@ -17,6 +17,19 @@ export default {
       });
     }
 
+    // Karen Warfare WebRTC ICE server endpoint
+    if (url.pathname === '/api/turn') {
+      return new Response(JSON.stringify({ iceServers: [] }), {
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+      });
+    }
+
+    // Route /karen or /karen-warfare to /karen.html
+    if (url.pathname === '/karen' || url.pathname === '/karen-warfare') {
+      const rewritten = new URL('/karen.html', request.url);
+      return env.ASSETS.fetch(new Request(rewritten.toString(), request));
+    }
+
     // Serve static files from public/ via Cloudflare Assets
     if (env && env.ASSETS && typeof env.ASSETS.fetch === 'function') {
       return env.ASSETS.fetch(request);

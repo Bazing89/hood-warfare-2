@@ -37,9 +37,138 @@
     ⚠️ SPAWNS FLIPPED! WATCH YOUR BACK ⚠️
   </div>
 
+  <!-- SCREEN 0: MAIN ARCADE GAMES HUB (FIRST SCREEN) -->
+  <div id="screen-games-hub" class="ui-screen">
+    <div class="hub-container">
+      <div class="hub-header">
+        <div class="hub-brand-pill">🔥 WARFARE ARCADE NETWORK</div>
+        <h1 class="hub-main-title">SELECT YOUR GAME</h1>
+        <p class="hub-main-subtitle">Choose a combat title below to jump straight into action</p>
+      </div>
+
+      <div class="hub-games-grid">
+        <!-- Game Card 1: Hood Warfare 2 -->
+        <div class="hub-game-card card-hood">
+          <div class="card-badge badge-hood">TACTICAL MULTIPLAYER</div>
+          <div class="card-hero-icon">🔫</div>
+          <h2 class="card-title">HOOD WARFARE 2</h2>
+          <div class="card-subtitle">NUKETOWN 24/7 TDM</div>
+          <p class="card-description">
+            Urban turf war showdown between Crips and Bloods on a high-fidelity 3D Nuketown. Features full-auto recoil, tactical slide mechanics, PBR lighting, and smart AI bot fill.
+          </p>
+          <div class="card-features">
+            <span>👥 12 Players / Dedicated Rooms</span>
+            <span>⚡ Sliding & Authentic Physics</span>
+            <span>🎯 3 Loadouts (AK-47 / MAC-10 / Trench 12G)</span>
+          </div>
+          <button id="btn-launch-hood" class="hub-btn btn-launch-hood" type="button">
+            PLAY HOOD WARFARE ➔
+          </button>
+        </div>
+
+        <!-- Game Card 2: Karen Warfare -->
+        <div class="hub-game-card card-karen">
+          <div class="card-badge badge-karen">NEW GAME RELEASE</div>
+          <div class="card-hero-icon">👜</div>
+          <h2 class="card-title">KAREN WARFARE</h2>
+          <div class="card-subtitle">MALL CHAOS & RAGE FPS</div>
+          <p class="card-description">
+            Full-scale suburban retail mayhem. Speak to the manager, deploy pepper spray, and battle across a multi-story shopping mall with custom rigged 3D models and hilarious voice lines.
+          </p>
+          <div class="card-features">
+            <span>🏬 Multi-Story Shopping Center</span>
+            <span>🗣️ 108 Recorded Karen Voice Lines</span>
+            <span>🌐 WebRTC P2P Multiplayer & AI Bots</span>
+          </div>
+          <a href="/karen.html" class="hub-btn btn-launch-karen">
+            PLAY KAREN WARFARE ➔
+          </a>
+        </div>
+
+        <!-- Game Card 3: Warfare 3 -->
+        <div class="hub-game-card card-third">
+          <div class="card-badge badge-third">COMING SOON</div>
+          <div class="card-hero-icon">⚡</div>
+          <h2 class="card-title">WARFARE 3</h2>
+          <div class="card-subtitle">CYBERNETIC ARENA</div>
+          <p class="card-description">
+            The future of browser warfare. Fast-paced vertical mobility, cyber grappling hooks, customizable cybernetic attachments, and full environmental destruction.
+          </p>
+          <div class="card-features">
+            <span>🚀 High-Speed Grapples & Wall-Runs</span>
+            <span>💥 Destructible Environments</span>
+            <span>🛡️ Energy Shields & Cyber Perks</span>
+          </div>
+          <button id="btn-launch-third" class="hub-btn btn-launch-third" type="button">
+            PREVIEW TEASER ⚡
+          </button>
+        </div>
+      </div>
+
+      <div class="hub-footer">
+        <span>ENGINE: PLAYCANVAS + THREE.JS PBR</span>
+        <span>NETWORKING: WEBSOCKET & WEBRTC P2P</span>
+        <span>BANG HEROES NETWORK © 2026</span>
+      </div>
+    </div>
+  </div>
+
   <!-- SCREEN 1: SERVER BROWSER -->
-  <div id="screen-server-browser" class="ui-screen">
+  <div id="screen-server-browser" class="ui-screen" style="display: none;">
     <div class="browser-panel">
+      <button id="btn-browser-back-to-hub" class="btn-back-hub" type="button">
+        ← BACK TO ALL GAMES
+      </button>
+
+      <!-- MULTI-GAME SELECTOR HUB -->
+      <div class="game-select-hub">
+        <div class="game-hub-heading">
+          <span class="hub-icon">🎮</span>
+          <span class="hub-title">WARFARE ARCADE NETWORK</span>
+          <span class="hub-sub">SELECT COMBAT TITLE:</span>
+        </div>
+        <div class="game-selector-grid">
+          <!-- Game 1: Hood Warfare 2 -->
+          <div class="game-card active" id="btn-select-hood" role="button" title="Currently Selected">
+            <div class="game-card-badge badge-active">ACTIVE</div>
+            <div class="game-card-content">
+              <div class="game-card-icon">🔫</div>
+              <div class="game-card-info">
+                <div class="game-card-title">HOOD WARFARE 2</div>
+                <div class="game-card-desc">Nuketown 24/7 Tactical Multiplayer FPS</div>
+              </div>
+            </div>
+            <div class="game-card-action">CURRENT GAME</div>
+          </div>
+
+          <!-- Game 2: Karen Warfare -->
+          <a href="/karen.html" class="game-card card-karen" id="btn-select-karen" title="Launch Karen Warfare">
+            <div class="game-card-badge badge-new">NEW GAME</div>
+            <div class="game-card-content">
+              <div class="game-card-icon">👜</div>
+              <div class="game-card-info">
+                <div class="game-card-title">KAREN WARFARE</div>
+                <div class="game-card-desc">Mall Chaos & Retail Rage FPS Simulator</div>
+              </div>
+            </div>
+            <div class="game-card-action launch-action">PLAY NOW ➔</div>
+          </a>
+
+          <!-- Game 3: Another Button -->
+          <div class="game-card card-third" id="btn-select-third" role="button" title="Coming Soon">
+            <div class="game-card-badge badge-soon">COMING SOON</div>
+            <div class="game-card-content">
+              <div class="game-card-icon">⚡</div>
+              <div class="game-card-info">
+                <div class="game-card-title">WARFARE 3</div>
+                <div class="game-card-desc">Cybernetic Warfare & Destructible Arenas</div>
+              </div>
+            </div>
+            <div class="game-card-action soon-action">IN DEV • VIEW</div>
+          </div>
+        </div>
+      </div>
+
       <div class="browser-header">
         <h1 class="game-title">HOOD WARFARE 2</h1>
         <div class="game-subtitle">NUKETOWN 24/7 TACTICAL MULTIPLAYER FPS</div>
@@ -125,7 +254,10 @@
         </div>
       </div>
 
-      <button id="btn-deploy" class="btn-primary-deploy">DEPLOY TO NUKETOWN</button>
+      <div class="team-select-button-row">
+        <button id="btn-back-to-browser" class="btn-secondary-back" type="button">← BACK TO SERVER BROWSER</button>
+        <button id="btn-deploy" class="btn-primary-deploy" type="button">DEPLOY TO NUKETOWN</button>
+      </div>
     </div>
   </div>
 
@@ -137,6 +269,10 @@
         <span class="timer-icon">⏱</span>
         <span id="hud-timer">10:00</span>
       </div>
+
+      <button id="btn-hud-menu" class="hud-menu-pill" type="button" title="Open Pause Menu / Main Screen (ESC)">
+        <span>⚙️</span> MENU [ESC]
+      </button>
 
       <div class="score-bars-container">
         <!-- Crips Score -->
@@ -166,8 +302,13 @@
     <div id="click-to-play-prompt" class="click-to-play-overlay" style="display: none;">
       <div class="click-to-play-card">
         <div class="c2p-icon">🎯</div>
-        <div class="c2p-title">CLICK ANYWHERE TO AIM</div>
-        <div class="c2p-subtitle">Engage Mouse Lock to Control Weapon & Look Around</div>
+        <div class="c2p-title">COMBAT PAUSED / MOUSE UNLOCKED</div>
+        <div class="c2p-subtitle">Select an option to resume combat or return to the main lobby</div>
+        <div class="c2p-button-group">
+          <button id="btn-c2p-resume" class="btn-c2p-resume" type="button">▶ RESUME COMBAT</button>
+          <button id="btn-c2p-menu" class="btn-c2p-menu" type="button">🏠 LEAVE TO MAIN MENU</button>
+          <a href="/karen.html" class="btn-c2p-karen">👜 PLAY KAREN WARFARE</a>
+        </div>
       </div>
     </div>
 
@@ -230,6 +371,31 @@
       </div>
     </div>
 
+    <!-- In-Game Pause Menu Modal -->
+    <div id="modal-pause-menu" class="pause-menu-overlay" style="display: none;">
+      <div class="pause-menu-panel">
+        <div class="pause-header">
+          <div class="pause-badge">MATCH PAUSED</div>
+          <h2 class="pause-title">COMBAT MENU</h2>
+          <div class="pause-sub">PRESS [ESC] OR CLICK BELOW</div>
+        </div>
+        <div class="pause-actions">
+          <button id="btn-pause-resume" class="btn-pause-action btn-resume" type="button">
+            <span class="icon">🎯</span> RESUME COMBAT (ESC)
+          </button>
+          <button id="btn-pause-team" class="btn-pause-action btn-team" type="button">
+            <span class="icon">🔄</span> CHANGE FACTION / LOADOUT (M)
+          </button>
+          <a href="/karen.html" class="btn-pause-action btn-karen">
+            <span class="icon">👜</span> SWITCH TO KAREN WARFARE
+          </a>
+          <button id="btn-pause-leave" class="btn-pause-action btn-leave" type="button">
+            <span class="icon">🚪</span> LEAVE TO MAIN SCREEN
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Full TAB Scoreboard Modal -->
     <div id="modal-scoreboard" class="scoreboard-modal" style="display: none;">
       <div class="sb-container">
@@ -256,6 +422,53 @@
       </div>
     </div>
   </div>
+
+  <!-- Game 3 Teaser Modal -->
+  <div id="modal-teaser" class="game-modal" style="display: none;">
+    <div class="game-modal-content">
+      <div class="game-modal-header">
+        <h3>⚡ WARFARE 3: CYBER ARENA</h3>
+        <button class="modal-close-btn" id="btn-close-teaser">✕</button>
+      </div>
+      <div class="game-modal-body">
+        <p>A new chapter in the Warfare series is in active development with high-speed movement, futuristic cyber weapons, and full arena destructibility.</p>
+        <div class="game-modal-features">
+          <div>🚀 High-Speed Vertical Mobility & Grapples</div>
+          <div>🔥 Cybernetic Loadouts & Custom Perks</div>
+          <div>🌐 Next-Gen WebGL Shading & Ray-Tracing FX</div>
+        </div>
+        <p style="margin-top: 14px; color: #8c9ba5; font-size: 13px;">Coming soon to the Warfare Network arcade!</p>
+      </div>
+      <div class="game-modal-footer">
+        <button class="btn-modal-action" id="btn-ack-teaser">UNDERSTOOD</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btnThird = document.getElementById('btn-select-third');
+      const modalTeaser = document.getElementById('modal-teaser');
+      const btnCloseTeaser = document.getElementById('btn-close-teaser');
+      const btnAckTeaser = document.getElementById('btn-ack-teaser');
+
+      if (btnThird && modalTeaser) {
+        btnThird.addEventListener('click', () => {
+          modalTeaser.style.display = 'flex';
+        });
+      }
+      const hideModal = () => {
+        if (modalTeaser) modalTeaser.style.display = 'none';
+      };
+      if (btnCloseTeaser) btnCloseTeaser.addEventListener('click', hideModal);
+      if (btnAckTeaser) btnAckTeaser.addEventListener('click', hideModal);
+      if (modalTeaser) {
+        modalTeaser.addEventListener('click', (e) => {
+          if (e.target === modalTeaser) hideModal();
+        });
+      }
+    });
+  </script>
 
   <!-- Scripts -->
   <!-- 1. PlayCanvas Local Script with CDN Fallback -->
