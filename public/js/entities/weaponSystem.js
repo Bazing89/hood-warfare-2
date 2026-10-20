@@ -337,13 +337,9 @@
 
     initInput() {
       window.addEventListener('mousedown', (e) => {
-        if (!document.pointerLockElement) {
-          const canvas = document.querySelector('canvas') || document.body;
-          if (canvas.requestPointerLock) {
-            canvas.requestPointerLock();
-          }
-          if (this.soundSynth) this.soundSynth.init();
-        }
+        // Only process firing if pointer lock is active and local player is alive
+        if (!document.pointerLockElement) return;
+        if (!this.player || !this.player.alive) return;
 
         if (e.button === 0) {
           // Left click: Fire
@@ -356,6 +352,17 @@
         if (e.button === 0) {
           this.isFiring = false;
         }
+      });
+
+      // Safely release firing state on pointer lock changes or window focus loss
+      document.addEventListener('pointerlockchange', () => {
+        if (!document.pointerLockElement) {
+          this.isFiring = false;
+        }
+      });
+
+      window.addEventListener('blur', () => {
+        this.isFiring = false;
       });
     }
 

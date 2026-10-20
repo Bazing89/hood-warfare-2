@@ -306,8 +306,10 @@ body, html {
 }
 
 .hub-container {
-  width: 1180px;
-  max-width: 96vw;
+  width: fit-content;
+  max-width: min(1180px, 96vw);
+  min-width: min(480px, 94vw);
+  margin: 0 auto;
   background: rgba(14, 18, 26, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
@@ -356,7 +358,8 @@ body, html {
 
 .hub-games-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 420px));
+  justify-content: center;
   gap: 20px;
   margin-bottom: 24px;
 }
@@ -542,6 +545,8 @@ body, html {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 20px;
   padding-top: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 11px;
@@ -636,7 +641,8 @@ body, html {
 
 .game-selector-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 340px));
+  justify-content: center;
   gap: 12px;
 }
 

@@ -160,35 +160,23 @@
         }
       });
 
-      // Mouse Look
+      // Mouse Look - only active when pointer lock is engaged and player is alive
       window.addEventListener('mousemove', (e) => {
+        if (!document.pointerLockElement || !this.alive) return;
         const sensitivity = 0.12;
 
-        if (document.pointerLockElement) {
-          this.rotY -= e.movementX * sensitivity;
-          this.pitch -= e.movementY * sensitivity;
+        this.rotY -= e.movementX * sensitivity;
+        this.pitch -= e.movementY * sensitivity;
 
-          if (this.pitch > 89) this.pitch = 89;
-          if (this.pitch < -89) this.pitch = -89;
+        if (this.pitch > 89) this.pitch = 89;
+        if (this.pitch < -89) this.pitch = -89;
 
-          this.rotY = (this.rotY % 360 + 360) % 360;
-        } else if (this.isMouseDown) {
-          const dx = e.clientX - this.lastMouseX;
-          const dy = e.clientY - this.lastMouseY;
-          this.lastMouseX = e.clientX;
-          this.lastMouseY = e.clientY;
-
-          this.rotY -= dx * sensitivity;
-          this.pitch -= dy * sensitivity;
-
-          if (this.pitch > 89) this.pitch = 89;
-          if (this.pitch < -89) this.pitch = -89;
-
-          this.rotY = (this.rotY % 360 + 360) % 360;
-        }
+        this.rotY = (this.rotY % 360 + 360) % 360;
       });
 
       window.addEventListener('mousedown', (e) => {
+        // Only track aim-down-sights if pointer lock is active and player is alive
+        if (!document.pointerLockElement || !this.alive) return;
         this.isMouseDown = true;
         this.lastMouseX = e.clientX;
         this.lastMouseY = e.clientY;
@@ -205,11 +193,34 @@
         }
       });
 
+      // Reset controls if pointer lock is dropped or window loses focus
+      document.addEventListener('pointerlockchange', () => {
+        if (!document.pointerLockElement) {
+          this.isMouseDown = false;
+          this.keys.ads = false;
+        }
+      });
+
+      window.addEventListener('blur', () => {
+        this.isMouseDown = false;
+        this.keys.ads = false;
+        for (const k in this.keys) {
+          if (typeof this.keys[k] === 'boolean') this.keys[k] = false;
+        }
+      });
+
       window.addEventListener('wheel', () => {
+        // Only switch weapon via wheel during active combat
+        if (!document.pointerLockElement || !this.alive) return;
         this.switchWeapon(this.activeSlot === 1 ? 2 : 1);
       });
 
-      window.addEventListener('contextmenu', (e) => e.preventDefault());
+      window.addEventListener('contextmenu', (e) => {
+        // Only suppress context menu during active gameplay
+        if (document.pointerLockElement) {
+          e.preventDefault();
+        }
+      });
     }
 
     handleJump() {

@@ -117,7 +117,10 @@
     requestPointerLock() {
       const canvas = document.querySelector('canvas') || document.body;
       if (canvas && canvas.requestPointerLock) {
-        canvas.requestPointerLock();
+        try {
+          const p = canvas.requestPointerLock();
+          if (p && p.catch) p.catch(() => {});
+        } catch (err) {}
       }
     }
 
@@ -179,6 +182,9 @@
       // Deploy Button: Synchronously request pointer lock in user click gesture!
       if (this.btnDeploy) {
         this.btnDeploy.addEventListener('click', () => {
+          if (typeof SoundSynth !== 'undefined' && SoundSynth.init) {
+            SoundSynth.init();
+          }
           this.requestPointerLock();
           this.deployToBattle();
         });
@@ -232,13 +238,17 @@
         });
       }
 
-      // Clicking anywhere while in game (protect buttons/links from auto-locking!)
+      // Clicking anywhere while in game (protect all interactive controls and overlays!)
       window.addEventListener('click', (e) => {
-        if (e.target.closest('button, a, input, .pause-menu-panel, .click-to-play-card, .game-modal')) {
+        if (e.target.closest('button, a, input, select, textarea, label, [role="button"], .pause-menu-panel, .click-to-play-card, .game-modal, .game-card, .faction-card, .loadout-card, .hub-game-card')) {
           return;
         }
         if (this.currentScreen === 'hud' && !document.pointerLockElement) {
-          if (!this.modalPauseMenu || this.modalPauseMenu.style.display === 'none') {
+          const pauseOpen = this.modalPauseMenu && this.modalPauseMenu.style.display !== 'none';
+          const deathOpen = this.deathScreen && this.deathScreen.style.display !== 'none';
+          const overOpen = this.matchOverScreen && this.matchOverScreen.style.display !== 'none';
+          const sbOpen = this.modalScoreboard && this.modalScoreboard.style.display !== 'none';
+          if (!pauseOpen && !deathOpen && !overOpen && !sbOpen) {
             this.requestPointerLock();
           }
         }
@@ -248,8 +258,11 @@
       document.addEventListener('pointerlockchange', () => {
         const locked = !!document.pointerLockElement;
         const pauseOpen = this.modalPauseMenu && this.modalPauseMenu.style.display !== 'none';
+        const deathOpen = this.deathScreen && this.deathScreen.style.display !== 'none';
+        const overOpen = this.matchOverScreen && this.matchOverScreen.style.display !== 'none';
+        const sbOpen = this.modalScoreboard && this.modalScoreboard.style.display !== 'none';
         if (this.clickToPlayPrompt) {
-          this.clickToPlayPrompt.style.display = (this.currentScreen === 'hud' && !locked && !pauseOpen) ? 'flex' : 'none';
+          this.clickToPlayPrompt.style.display = (this.currentScreen === 'hud' && !locked && !pauseOpen && !deathOpen && !overOpen && !sbOpen) ? 'flex' : 'none';
         }
       });
 
@@ -336,10 +349,20 @@
       if (this.screenTeamSelect) this.screenTeamSelect.style.display = (screenName === 'team-select') ? 'flex' : 'none';
       if (this.screenHud) this.screenHud.style.display = (screenName === 'hud') ? 'block' : 'none';
 
+      // Ensure pointer lock is released when returning to or browsing menus
+      if (screenName !== 'hud') {
+        if (document.exitPointerLock && document.pointerLockElement) {
+          try { document.exitPointerLock(); } catch (err) {}
+        }
+      }
+
       if (this.clickToPlayPrompt) {
         const locked = !!document.pointerLockElement;
-        const pauseOpen = this.modalPauseMenu && this.modalPauseMenu.style.display === 'flex';
-        this.clickToPlayPrompt.style.display = (screenName === 'hud' && !locked && !pauseOpen) ? 'flex' : 'none';
+        const pauseOpen = this.modalPauseMenu && this.modalPauseMenu.style.display !== 'none';
+        const deathOpen = this.deathScreen && this.deathScreen.style.display !== 'none';
+        const overOpen = this.matchOverScreen && this.matchOverScreen.style.display !== 'none';
+        const sbOpen = this.modalScoreboard && this.modalScoreboard.style.display !== 'none';
+        this.clickToPlayPrompt.style.display = (screenName === 'hud' && !locked && !pauseOpen && !deathOpen && !overOpen && !sbOpen) ? 'flex' : 'none';
       }
     }
 
@@ -429,6 +452,9 @@
 
           this.showScreen('hud');
         } else if (res && res.error) {
+          if (document.exitPointerLock && document.pointerLockElement) {
+            try { document.exitPointerLock(); } catch (err) {}
+          }
           if (this.balanceWarningEl) {
             this.balanceWarningEl.innerText = res.error;
             this.balanceWarningEl.style.display = 'block';

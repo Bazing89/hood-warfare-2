@@ -81,6 +81,13 @@
       originalShowTeamSelect();
     };
 
+    const originalLeave = uiManager.leaveMatchToMainMenu.bind(uiManager);
+    uiManager.leaveMatchToMainMenu = function() {
+      aerialCamera.camera.enabled = true;
+      localPlayer.camera.camera.enabled = false;
+      originalLeave();
+    };
+
     // 5. Main Game Loop (PlayCanvas Update Event)
     app.on('update', (dt) => {
       if (uiManager.currentScreen === 'hud') {
