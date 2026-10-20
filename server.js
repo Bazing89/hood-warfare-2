@@ -35,6 +35,11 @@ app.get(['/karen', '/karen-warfare'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'karen.html'));
 });
 
+// Dedicated routes for Indian Simulator
+app.get(['/indian', '/indian-simulator'], (req, res) => {
+  res.redirect('http://localhost:3002');
+});
+
 // Fallback route to serve index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
