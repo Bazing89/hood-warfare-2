@@ -100,6 +100,9 @@
         gameState.stats.potsSmashed++;
         const pts = ui.addScore(data.points);
         ui.spawnPopup(`+${pts} CLAY MATKA SMASHED! 🏺`, true);
+      } else if (type === 'tuktuk_hit') {
+        const pts = ui.addScore(data.points);
+        ui.spawnPopup(`+${pts} AUTO RICKSHAW SPLAT! 🛺💥<br><small>*HONK HONK!*</small>`, true);
       } else if (type === 'player_hit') {
         ui.spawnPopup(`MUD SPLAT FROM ${data.thrower}! 💥<br><small>Press [C] to Clean Face</small>`, false);
       }

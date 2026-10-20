@@ -299,6 +299,28 @@ class WeaponSystem {
       }
     }
 
+    // E2. Check Tuk-Tuks / Auto Rickshaws (Honk Horn & Mud Splat!)
+    if (world && world.tukTuks) {
+      for (let tuk of world.tukTuks) {
+        if (pos.distanceTo(tuk.position) < tuk.radius) {
+          if (window.soundEngine && window.soundEngine.playAutoHorn) {
+            window.soundEngine.playAutoHorn();
+          }
+          this._spawnMudSplash(pos, proj.type);
+          this._addGroundDecal(pos);
+
+          if (proj.isFromPlayer && onEvent) {
+            onEvent('tuktuk_hit', {
+              points: 150,
+              tukName: tuk.name,
+              hitPos: pos
+            });
+          }
+          return true;
+        }
+      }
+    }
+
     // F. Check Buildings / Colliders
     if (world && world.colliders) {
       for (let c of world.colliders) {

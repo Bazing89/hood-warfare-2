@@ -229,6 +229,32 @@ class SoundEngine {
   }
 
   /**
+   * Signature Indian Auto-Rickshaw / Tuk-Tuk Double Beep Horn!
+   */
+  playAutoHorn() {
+    if (!this.initialized || this.isMuted) return;
+    this.resume();
+
+    const t = this.ctx.currentTime;
+    [0, 0.12].forEach(offset => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(880, t + offset); // A5 high electric horn beep
+
+      gain.gain.setValueAtTime(0.001, t + offset);
+      gain.gain.linearRampToValueAtTime(0.35, t + offset + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + offset + 0.08);
+
+      osc.connect(gain);
+      gain.connect(this.sfxGain);
+
+      osc.start(t + offset);
+      osc.stop(t + offset + 0.08);
+    });
+  }
+
+  /**
    * Traditional Indian Temple Brass Bell
    * FM synthesis with lingering metallic shimmer
    */

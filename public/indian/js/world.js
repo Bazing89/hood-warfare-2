@@ -15,6 +15,7 @@ class VillageWorld {
     this.bellMesh = null;
     this.bellSwinging = false;
     this.bellSwingAngle = 0;
+    this.tukTuks = []; // High-fidelity 3D Tuk-Tuks / Auto Rickshaws
 
     this.materials = this._initMaterials();
   }
@@ -79,6 +80,7 @@ class VillageWorld {
     this._buildClayMatkas();
     this._buildFencesAndDecorations();
     this._buildSurroundingScenery();
+    this._tryLoadGLBProps();
   }
 
   _buildLighting() {
@@ -524,74 +526,52 @@ class VillageWorld {
   }
 
   _buildAutoRickshaw() {
-    // Iconic Indian Auto-Rickshaw (Tuk-Tuk)
-    const autoX = -10;
-    const autoZ = -34;
-    const group = new THREE.Group();
-    group.position.set(autoX, 0, autoZ);
-    group.rotation.y = 0.5;
+    this.tukTuks = [];
 
-    // Green Lower Body
-    const lowerBody = new THREE.Mesh(
-      new THREE.BoxGeometry(2.0, 0.9, 3.2),
-      this.materials.rickshawGreen
-    );
-    lowerBody.position.y = 0.8;
-    lowerBody.castShadow = true;
-    group.add(lowerBody);
+    // 1. Classic Green & Yellow Auto-Rickshaw (Village Entrance)
+    const auto1 = typeof TukTukBuilder !== 'undefined'
+      ? TukTukBuilder.createTukTuk({ x: -10, y: 0, z: -34, rotationY: 0.5, bodyColor: 0x1b5e20, hoodColor: 0xfcb003 })
+      : new THREE.Group();
 
-    // Yellow Upper Hood / Canopy
-    const upperHood = new THREE.Mesh(
-      new THREE.BoxGeometry(1.9, 0.85, 2.6),
-      this.materials.rickshawYellow
-    );
-    upperHood.position.set(0, 1.65, -0.2);
-    upperHood.castShadow = true;
-    group.add(upperHood);
-
-    // Windshield & Front Nose
-    const frontNose = new THREE.Mesh(
-      new THREE.ConeGeometry(0.9, 1.2, 4),
-      this.materials.rickshawYellow
-    );
-    frontNose.rotation.x = Math.PI / 4;
-    frontNose.position.set(0, 1.2, 1.3);
-    group.add(frontNose);
-
-    // 3 Wheels (1 front, 2 rear)
-    const wheelGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.22, 12);
-    const fWheel = new THREE.Mesh(wheelGeo, this.materials.blackMetal);
-    fWheel.rotation.z = Math.PI / 2;
-    fWheel.position.set(0, 0.38, 1.3);
-
-    const rWheelL = fWheel.clone();
-    rWheelL.position.set(-0.95, 0.38, -0.9);
-
-    const rWheelR = fWheel.clone();
-    rWheelR.position.set(0.95, 0.38, -0.9);
-
-    group.add(fWheel);
-    group.add(rWheelL);
-    group.add(rWheelR);
-
-    // Headlight
-    const headlight = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.15, 0.15, 0.1, 8),
-      this.materials.brass
-    );
-    headlight.rotation.x = Math.PI / 2;
-    headlight.position.set(0, 0.95, 1.7);
-    group.add(headlight);
-
-    this.scene.add(group);
+    this.scene.add(auto1);
 
     this.colliders.push({
-      minX: autoX - 1.4,
-      maxX: autoX + 1.4,
-      minZ: autoZ - 2.0,
-      maxZ: autoZ + 2.0,
+      minX: -10 - 1.6,
+      maxX: -10 + 1.6,
+      minZ: -34 - 2.2,
+      maxZ: -34 + 2.2,
       minY: 0,
-      maxY: 2.2
+      maxY: 2.5
+    });
+
+    this.tukTuks.push({
+      position: new THREE.Vector3(-10, 1.2, -34),
+      radius: 2.2,
+      group: auto1,
+      name: 'Shantipura Express Tuk-Tuk'
+    });
+
+    // 2. Egyptian Street Tuk-Tuk (Weathered Charcoal & Crimson Red, East Alley)
+    const auto2 = typeof TukTukBuilder !== 'undefined'
+      ? TukTukBuilder.createTukTuk({ x: 32, y: 0, z: 22, rotationY: -1.2, bodyColor: 0x222222, hoodColor: 0xd32f2f })
+      : new THREE.Group();
+
+    this.scene.add(auto2);
+
+    this.colliders.push({
+      minX: 32 - 1.6,
+      maxX: 32 + 1.6,
+      minZ: 22 - 2.2,
+      maxZ: 22 + 2.2,
+      minY: 0,
+      maxY: 2.5
+    });
+
+    this.tukTuks.push({
+      position: new THREE.Vector3(32, 1.2, 22),
+      radius: 2.2,
+      group: auto2,
+      name: 'Egyptian Street Tuk-Tuk'
     });
   }
 
@@ -767,6 +747,117 @@ class VillageWorld {
         this.bellMesh.rotation.z = 0;
       }
     }
+  }
+
+  _tryLoadGLBProps() {
+    if (typeof THREE.GLTFLoader === 'undefined') return;
+    const basePath = (window.location.pathname.startsWith('/indian') ? '/indian/models/' : '/models/');
+    const loader = new THREE.GLTFLoader();
+
+    // 1. Load Cart.glb (replaces bullock cart with 3D model)
+    loader.load(basePath + 'Cart.glb', (gltf) => {
+      const cart = gltf.scene;
+      cart.scale.set(2.0, 2.0, 2.0);
+      cart.position.set(14, 0, 8);
+      cart.rotation.y = -0.35;
+      cart.traverse(c => {
+        if (c.isMesh) {
+          c.castShadow = true;
+          c.receiveShadow = true;
+        }
+      });
+      this.scene.add(cart);
+    }, undefined, (e) => {});
+
+    // 2. Load Bell.glb (replaces temple bell with 3D model)
+    loader.load(basePath + 'Bell.glb', (gltf) => {
+      const bell = gltf.scene;
+      bell.scale.set(1.5, 1.5, 1.5);
+      bell.position.set(0, -0.9, 0);
+      bell.traverse(c => {
+        if (c.isMesh) {
+          c.castShadow = true;
+          c.material = this.materials.brass;
+        }
+      });
+      if (this.bellMesh) {
+        while (this.bellMesh.children.length > 1) {
+          this.bellMesh.remove(this.bellMesh.children[1]);
+        }
+        this.bellMesh.add(bell);
+      }
+    }, undefined, (e) => {});
+
+    // 3. Load Hay.glb bales around Gaushala
+    loader.load(basePath + 'Hay.glb', (gltf) => {
+      const hay1 = gltf.scene;
+      hay1.scale.set(2.0, 2.0, 2.0);
+      hay1.position.set(-36, 0, 16);
+      hay1.traverse(c => { if (c.isMesh) c.castShadow = true; });
+      this.scene.add(hay1);
+
+      const hay2 = hay1.clone();
+      hay2.position.set(-34, 0, 8);
+      hay2.rotation.y = 1.2;
+      this.scene.add(hay2);
+
+      const hay3 = hay1.clone();
+      hay3.position.set(-28, 0, 4);
+      hay3.rotation.y = 0.5;
+      this.scene.add(hay3);
+    }, undefined, (e) => {});
+
+    // 4. Load PalmTree_1.glb & PalmTree_2.glb along perimeter
+    const palmPositions = [
+      { x: -48, z: -40, type: 'PalmTree_1.glb', s: 2.2 },
+      { x: -52, z: 20, type: 'PalmTree_2.glb', s: 2.5 },
+      { x: 45, z: -35, type: 'PalmTree_1.glb', s: 2.0 },
+      { x: 42, z: 35, type: 'PalmTree_2.glb', s: 2.6 },
+      { x: -18, z: 48, type: 'PalmTree_1.glb', s: 2.3 },
+      { x: 22, z: -50, type: 'PalmTree_2.glb', s: 2.4 }
+    ];
+
+    palmPositions.forEach(p => {
+      loader.load(basePath + p.type, (gltf) => {
+        const tree = gltf.scene;
+        tree.scale.set(p.s, p.s, p.s);
+        tree.position.set(p.x, 0, p.z);
+        tree.traverse(c => {
+          if (c.isMesh) {
+            c.castShadow = true;
+            c.receiveShadow = true;
+          }
+        });
+        this.scene.add(tree);
+      }, undefined, (e) => {});
+    });
+
+    // 5. Load House_1.glb and House_2.glb for village Haveli
+    loader.load(basePath + 'House_1.glb', (gltf) => {
+      const h1 = gltf.scene;
+      h1.scale.set(2.4, 2.4, 2.4);
+      h1.position.set(-14, 0, -26);
+      h1.traverse(c => {
+        if (c.isMesh) {
+          c.castShadow = true;
+          c.receiveShadow = true;
+        }
+      });
+      this.scene.add(h1);
+    }, undefined, (e) => {});
+
+    loader.load(basePath + 'House_2.glb', (gltf) => {
+      const h2 = gltf.scene;
+      h2.scale.set(2.4, 2.4, 2.4);
+      h2.position.set(12, 0, -28);
+      h2.traverse(c => {
+        if (c.isMesh) {
+          c.castShadow = true;
+          c.receiveShadow = true;
+        }
+      });
+      this.scene.add(h2);
+    }, undefined, (e) => {});
   }
 
   ringBell() {
